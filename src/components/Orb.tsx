@@ -5,15 +5,14 @@ interface OrbProps {
   hue?: number;
   hoverIntensity?: number;
   rotateOnHover?: boolean;
-  innerRadius?: number;
   forceHoverState?: boolean;
+  innerRadius?: number;
 }
 
 export default function Orb({
   hue = 0,
   hoverIntensity = 0.2,
   rotateOnHover = true,
-  innerRadius = 0.6,
   forceHoverState = false,
 }: OrbProps) {
   const ctnDom = useRef<HTMLDivElement>(null);
@@ -110,7 +109,7 @@ export default function Orb({
     const vec3 baseColor1 = vec3(0.611765, 0.262745, 0.996078);
     const vec3 baseColor2 = vec3(0.298039, 0.760784, 0.913725);
     const vec3 baseColor3 = vec3(0.062745, 0.078431, 0.600000);
-  uniform float innerRadius;
+    const float innerRadius = 0.6;
     const float noiseScale = 0.65;
     
     float light1(float intensity, float attenuation, float dist) {
@@ -131,7 +130,7 @@ export default function Orb({
       float invLen = len > 0.0 ? 1.0 / len : 0.0;
       
       float n0 = snoise3(vec3(uv * noiseScale, iTime * 0.5)) * 0.5 + 0.5;
-  float r0 = mix(mix(innerRadius, 1.0, 0.4), mix(innerRadius, 1.0, 0.6), n0);
+      float r0 = mix(mix(innerRadius, 1.0, 0.4), mix(innerRadius, 1.0, 0.6), n0);
       float d0 = distance(uv, (r0 * invLen) * uv);
       float v0 = light1(1.0, 10.0, d0);
       v0 *= smoothstep(r0 * 1.05, r0, len);
@@ -200,7 +199,6 @@ export default function Orb({
           ),
         },
         hue: { value: hue },
-        innerRadius: { value: innerRadius },
         hover: { value: 0 },
         rot: { value: 0 },
         hoverIntensity: { value: hoverIntensity },
@@ -264,7 +262,6 @@ export default function Orb({
       lastTime = t;
       program.uniforms.iTime.value = t * 0.001;
       program.uniforms.hue.value = hue;
-      program.uniforms.innerRadius.value = innerRadius;
       program.uniforms.hoverIntensity.value = hoverIntensity;
 
       const effectiveHover = forceHoverState ? 1 : targetHover;

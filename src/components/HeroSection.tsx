@@ -33,8 +33,13 @@ export function HeroSection() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.2, ease: [0.6, -0.05, 0.01, 0.99] }}
       >
-  {/* Centered Orb canvas as an orange background (hue ~28deg) */}
-  <Orb hue={28} hoverIntensity={0.3} rotateOnHover={true} innerRadius={0.75} />
+        {/* Centered Orb canvas as an orange background (hue ~28deg) */}
+        <Orb
+          hue={28}
+          hoverIntensity={0.3}
+          rotateOnHover={true}
+          innerRadius={0.75}
+        />
       </motion.div>
 
       {/* Main content */}
